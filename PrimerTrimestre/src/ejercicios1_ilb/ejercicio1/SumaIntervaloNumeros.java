@@ -18,7 +18,7 @@ public class SumaIntervaloNumeros {
             for(int i = num1; i <= num2; i++) {
                 suma += i;
             }
-        System.out.println("La suma del intervalo entre " + num1 + " y " + num2 + " es: " + suma);
+            System.out.println("La suma del intervalo entre " + num1 + " y " + num2 + " es: " + suma);
         } else if(num2 > num1) {
             int temp = num2;
             num2 = num1;
