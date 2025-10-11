@@ -1,0 +1,1 @@
+java .\PSP\PrimerTrimestre\src\ejercicios1_ilb\ejercicio1\SumaIntervaloNumeros.java 1 5
