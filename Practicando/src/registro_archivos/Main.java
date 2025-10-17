@@ -1,7 +1,6 @@
 package registro_archivos;
 
 //Clases
-//import java.lang.ProcessBuilder no necesario, ya que se importa junto con el compilador.
 import java.io.File;
 
 //Excepciones
@@ -73,15 +72,17 @@ public class Main {
 		
 		//Tarea 2: Ejecución del Proceso Externo
 		ProcessBuilder pb = new ProcessBuilder(); //Declaración del proceso
+		
 		pb.command("CMD.EXE", "/C", "DIR"); //Comando que se va a ejecutar
 		pb.redirectError(new File(nombreDirLogs + "ErroresDeEjecucion.txt")); //Redirigir los errores del proceso a un archivo de errores
+		
+		File logs = new File(nombreDirLogs + "RegistroSalida.txt"); //Declarar el fichero de salida para los logs.
+		pb.redirectOutput(logs); //Redireccionar la salida del proceso al fichero logs
 		
 
 		Process proceso = pb.start(); //Iniciar el proceso
 		
 		//Tarea 3: Captura y Persistencia de la Salida (Flujos de Caracteres)
-		File logs = new File(nombreDirLogs + "RegistroSalida.txt"); //Declarar el fichero de salida para los logs.
-		pb.redirectOutput(logs); //Redireccionar la salida del proceso al fichero logs
 		
 		//Finalización del proceso
 		int espera = proceso.waitFor();

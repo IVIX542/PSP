@@ -5,6 +5,7 @@ public class Palindromos {
 	public static void main(String[] args) {
 		/**
 		 * @author Iván López Benítez
+		 * 
 		 * Realiza un programa que lea una cadena pasada como argumento al main() y
 		 * visualice en pantalla si la cadena es o no palíndromo (palabra que es igual
 		 * si se lee de izquierda a derecha que de derecha a izquierda), en este caso 
