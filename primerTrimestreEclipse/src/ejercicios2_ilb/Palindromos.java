@@ -47,7 +47,7 @@ public class Palindromos {
             System.exit(0);
         } else {
             System.out.println(args[0] + " no es un palíndromo.");
-            System.exit(-1);
+            System.exit(1);
         }
     
 		
