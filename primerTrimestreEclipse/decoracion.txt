@@ -1,0 +1,8 @@
+Venta=100
+Compra=300
+Venta=600
+Compra=300
+Venta=600
+Venta=700
+Compra=300
+Venta=900

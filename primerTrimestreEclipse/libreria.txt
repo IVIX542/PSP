@@ -1,0 +1,5 @@
+Venta=500
+Compra=500
+Venta=600
+Compra=500
+Venta=600
