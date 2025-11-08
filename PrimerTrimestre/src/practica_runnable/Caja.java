@@ -1,5 +1,9 @@
 package practica_runnable;
 
+/**
+ * @author Iván López Benítez
+ */
+
 public class Caja {
     private String nombre;
     private int numero;

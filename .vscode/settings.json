@@ -1,3 +1,5 @@
 {
-    "java.debug.settings.onBuildFailureProceed": true
+    "java.debug.settings.onBuildFailureProceed": true,
+    "vscode-office.editorTheme": "Auto",
+    "vscode-office.hideToolbar": false
 }

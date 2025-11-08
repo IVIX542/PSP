@@ -1,14 +1,19 @@
 package practica_runnable;
 
+/**
+ * @author Iván López Benítez
+ */
+
 import java.util.Scanner;
 import java.util.Random;
 
 public class Supermercado {
+
+    static final String errorStringDatos="ERROR: Número fuera del límite";
+    static final String errorExcepcionCajas="Error al esperar a que terminen las cajas";
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        
-        System.out.println("Bienvenido a la simulación de Supermercado");
-        System.out.println("========================================");
         
         // Solicitar número de cajas (1-5)
         int numCajas = 0;
@@ -20,7 +25,7 @@ public class Supermercado {
                 numCajas = inputCajas;
                 entradaValida = true;
             } else {
-                System.out.println("Error: el número de cajas debe estar entre 1 y 5");
+                System.out.println(errorStringDatos);
             }
         }
         
@@ -34,7 +39,7 @@ public class Supermercado {
                 numClientes = inputClientes;
                 entradaValida = true;
             } else {
-                System.out.println("Error: el número de clientes debe estar entre 1 y 7");
+                System.out.println(errorStringDatos);
             }
         }
         
@@ -52,15 +57,14 @@ public class Supermercado {
                 System.out.print("Número de artículos del cliente " + (i + 1) + " (1-6): ");
                 numProductos = scanner.nextInt();
                 if (numProductos < 1 || numProductos > 6) {
-                    System.out.println("Error: el número de artículos debe estar entre 1 y 6");
+                    System.out.println(errorStringDatos);
                 }
             } while (numProductos < 1 || numProductos > 6);
             
             clientes[i] = new Cliente(i + 1, numProductos, null);
         }
         
-        System.out.println("\nINICIO DE LA SIMULACIÓN");
-        System.out.println("=====================\n");
+        //Inicio simulación
         long tiempoInicioTotal = System.currentTimeMillis();
         
         // Crear una copia final de los arrays para usar en los hilos
@@ -76,7 +80,7 @@ public class Supermercado {
         for (int i = 0; i < numCajasFinal; i++) {
             final int cajaIndex = i;
             hilosCajas[i] = new Thread(() -> {
-                // Asignar clientes a esta caja (distribución round-robin)
+                // Asignar clientes a esta caja
                 for (int j = cajaIndex; j < numClientesFinal; j += numCajasFinal) {
                     cajasFinal[cajaIndex].atenderCliente(clientesFinal[j]);
                 }
@@ -90,7 +94,7 @@ public class Supermercado {
                 hilo.join();
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
-                System.out.println("Error al esperar a que terminen las cajas");
+                System.out.println(errorExcepcionCajas);
             }
         }
         
@@ -107,8 +111,7 @@ public class Supermercado {
         
         // Mostrar estadísticas por caja
         for (Caja caja : cajas) {
-            System.out.println(caja.getNombre() + " - Clientes atendidos: " + caja.getClientesAtendidos() + 
-                             " - Tiempo total: " + caja.getTiempoTotal() + " segundos");
+            System.out.println(caja.getNombre() + " - Clientes atendidos: " + caja.getClientesAtendidos() + " - Tiempo total: " + caja.getTiempoTotal() + " segundos");
         }
         
         // Mostrar tiempo de cada cliente

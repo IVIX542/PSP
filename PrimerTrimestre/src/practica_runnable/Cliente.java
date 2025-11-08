@@ -1,5 +1,9 @@
 package practica_runnable;
 
+/**
+ * @author Iván López Benítez
+ */
+
 import java.util.Random;
 
 public class Cliente implements Runnable {
@@ -8,6 +12,7 @@ public class Cliente implements Runnable {
     private int numProductos;
     private long tiempoInicio;
     private long tiempoFin;
+    private long tiempoTotal;
     private long[] tiemposProductos;
     private Random random = new Random();
 
@@ -20,16 +25,17 @@ public class Cliente implements Runnable {
 
     @Override
     public void run() {
+        System.out.println("Comienzo Cliente " + id + ", tiempo 0 en " + caja.getNombre());
         tiempoInicio = System.currentTimeMillis();
-        System.out.println("[" + getTiempoActual() + "] Cliente " + id + " empieza a ser atendido en " + 
-                         caja.getNombre() + " con " + numProductos + " artículos");
         
         for (int i = 0; i < numProductos; i++) {
             int tiempoProcesamiento = random.nextInt(5) + 1; // 1-5 segundos
             tiemposProductos[i] = tiempoProcesamiento;
+
+            tiempoFin = System.currentTimeMillis();
+            tiempoTotal = (tiempoFin - tiempoInicio) / 1000;
             
-            System.out.println("[" + getTiempoActual() + "] Caja " + caja.getNumero() + ": Artículo " + (i + 1) + 
-                             " del cliente " + id + " cobrado en " + tiempoProcesamiento + " segundos.");
+            System.out.println("Vendido producto " + (i + 1) + " del Cliente " + id + " en " + caja.getNombre() + ", tiempo total del cliente: " + tiempoTotal + " segundos.");
             
             try {
                 Thread.sleep(tiempoProcesamiento * 1000);
@@ -41,13 +47,8 @@ public class Cliente implements Runnable {
         }
         
         tiempoFin = System.currentTimeMillis();
-        long tiempoTotal = (tiempoFin - tiempoInicio) / 1000;
-        System.out.println("[" + getTiempoActual() + "] Cliente " + id + " ha terminado su compra en " + 
-                         caja.getNombre() + ". Tiempo total: " + tiempoTotal + " segundos");
-    }
-
-    private String getTiempoActual() {
-        return String.format("%1$tH:%1$tM:%1$tS", System.currentTimeMillis());
+        tiempoTotal = (tiempoFin - tiempoInicio) / 1000;
+        System.out.println("*** El Cliente " + id + " ha terminado su compra en " + caja.getNombre() + ", tiempo total del cliente: " + tiempoTotal + " segundos.");
     }
 
     public long getTiempoTotal() {
