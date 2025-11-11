@@ -35,7 +35,7 @@ public class Cliente implements Runnable {
             tiempoFin = System.currentTimeMillis();
             tiempoTotal = (tiempoFin - tiempoInicio) / 1000;
             
-            System.out.println("Vendido producto " + (i + 1) + " del Cliente " + id + " en " + caja.getNombre() + ", tiempo total del cliente: " + tiempoTotal + " segundos.");
+            System.out.println("Vendido producto " + (i + 1) + " del Cliente " + id + " en " + caja.getNombre() + ", tiempo total del cliente: " + (tiempoTotal + tiempoProcesamiento) + " segundos.");
             
             try {
                 Thread.sleep(tiempoProcesamiento * 1000);
@@ -48,7 +48,7 @@ public class Cliente implements Runnable {
         
         tiempoFin = System.currentTimeMillis();
         tiempoTotal = (tiempoFin - tiempoInicio) / 1000;
-        System.out.println("*** El Cliente " + id + " ha terminado su compra en " + caja.getNombre() + ", tiempo total del cliente: " + tiempoTotal + " segundos.");
+        System.out.println("\n*** El Cliente " + id + " ha terminado su compra en " + caja.getNombre() + ", tiempo total del cliente: " + tiempoTotal + " segundos.");
     }
 
     public long getTiempoTotal() {

@@ -67,7 +67,7 @@ public class Supermercado {
         //Inicio simulación
         long tiempoInicioTotal = System.currentTimeMillis();
         
-        // Crear una copia final de los arrays para usar en los hilos
+        // Crear una copia (constante) de los arrays para usar en los hilos
         final Caja[] cajasFinal = cajas;
         final Cliente[] clientesFinal = clientes;
         final int numCajasFinal = numCajas;
@@ -102,23 +102,8 @@ public class Supermercado {
         long tiempoFinTotal = System.currentTimeMillis();
         long tiempoTotal = (tiempoFinTotal - tiempoInicioTotal) / 1000;
         
-        // Mostrar resumen
-        System.out.println("\nRESUMEN");
-        System.out.println("=======\n");
-        
         // Mostrar tiempo total de la simulación
-        System.out.println("Tiempo total de la simulación: " + tiempoTotal + " segundos\n");
-        
-        // Mostrar estadísticas por caja
-        for (Caja caja : cajas) {
-            System.out.println(caja.getNombre() + " - Clientes atendidos: " + caja.getClientesAtendidos() + " - Tiempo total: " + caja.getTiempoTotal() + " segundos");
-        }
-        
-        // Mostrar tiempo de cada cliente
-        System.out.println("\nTiempo por cliente:");
-        for (Cliente cliente : clientes) {
-            System.out.println("Cliente " + cliente.getId() + ": " + cliente.getTiempoTotal() + " segundos");
-        }
+        System.out.println("\nTiempo total global para atender a todos los clientes: " + tiempoTotal + " segundos\n");
         
         scanner.close();
     }

@@ -17,21 +17,28 @@ public class Caja {
         this.tiempoTotal = 0;
     }
 
-    public synchronized void atenderCliente(Cliente cliente) {
+    public void atenderCliente(Cliente cliente) {
         cliente.setCaja(this);
-        Thread hiloCliente = new Thread(cliente);
+        Thread hiloCliente = new Thread(new Runnable() {
+            @Override
+            public synchronized void run() {
+                try {
+                    // Ejecutamos el cliente
+                    cliente.run();
+                    
+                    // Actualizamos los contadores
+                    clientesAtendidos++;
+                    tiempoTotal += cliente.getTiempoTotal();
+                    
+                } catch (Exception e) {
+                    Thread.currentThread().interrupt();
+                    System.out.println("Error al atender al cliente " + cliente.getId());
+                }
+            }
+        });
+        
+        // Iniciamos el hilo del cliente sin esperar a que termine
         hiloCliente.start();
-        
-        try {
-            hiloCliente.join();
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            System.out.println("Error al atender al cliente " + cliente.getId());
-            return;
-        }
-        
-        clientesAtendidos++;
-        tiempoTotal += cliente.getTiempoTotal();
     }
 
     public String getNombre() {
