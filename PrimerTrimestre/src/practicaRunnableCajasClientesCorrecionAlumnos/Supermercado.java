@@ -8,15 +8,24 @@ import java.util.Scanner;
 
 public class Supermercado {
 
+    //Variables globales
     static final String errorStringDatos="ERROR: Número fuera del límite";
     static final String errorExcepcionCajas="Error al esperar a que terminen las cajas";
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         
-        // Solicitar número de cajas (1-5)
+        //Variables para cajas
         int numCajas = 0;
         boolean entradaValida = false;
+        
+        //Variables para clientes
+        int numClientes = 0;
+        entradaValida = false;
+        //Array de clientes
+        Cliente[] clientes = new Cliente[numClientes];
+        
+        // Introducimos el número de cajas por teclado
         while (!entradaValida) {
             System.out.print("Introduce el número de cajas (1-5): ");
             int inputCajas = scanner.nextInt();
@@ -28,9 +37,7 @@ public class Supermercado {
             }
         }
         
-        // Solicitar número de clientes (1-7)
-        int numClientes = 0;
-        entradaValida = false;
+        // Introducimos el número de clientes por teclado
         while (!entradaValida) {
             System.out.print("Introduce el número de clientes (1-7): ");
             int inputClientes = scanner.nextInt();
@@ -42,14 +49,13 @@ public class Supermercado {
             }
         }
         
-        // Crear cajas
+        // Creamos las cajas
         Caja[] cajas = new Caja[numCajas];
         for (int i = 0; i < numCajas; i++) {
             cajas[i] = new Caja(i);
         }
         
-        // Crear clientes con productos especificados por el usuario (1-6 productos por cliente)
-        Cliente[] clientes = new Cliente[numClientes];
+        // Creamos los clientes, introduciendo los productos de cada cliente por teclado
         for (int i = 0; i < numClientes; i++) {
             int numProductos;
             do {
@@ -63,10 +69,10 @@ public class Supermercado {
             clientes[i] = new Cliente(i + 1, numProductos, null);
         }
         
-        //Inicio simulación
+        //Iniciamos el supermercado
         long tiempoInicioTotal = System.currentTimeMillis();
         
-        // Crear una copia (constante) de los arrays para usar en los hilos
+        // Crear una copia (final) de los arrays para usar en los hilos
         final Caja[] cajasFinal = cajas;
         final Cliente[] clientesFinal = clientes;
         final int numCajasFinal = numCajas;
@@ -75,15 +81,18 @@ public class Supermercado {
         // Crear un array para almacenar los hilos de las cajas
         Thread[] hilosCajas = new Thread[numCajasFinal];
         
-        // Iniciar un hilo por cada caja
+        // Iniciar un hilo (cliente) por cada caja
         for (int i = 0; i < numCajasFinal; i++) {
+
             final int cajaIndex = i;
             hilosCajas[i] = new Thread(() -> {
-                // Asignar clientes a esta caja
+                // Metemos los clientes en la caja
                 for (int j = cajaIndex; j < numClientesFinal; j += numCajasFinal) {
                     cajasFinal[cajaIndex].atenderCliente(clientesFinal[j]);
                 }
             });
+
+            //Iniciamos el hilo de cada caja
             hilosCajas[i].start();
         }
         
@@ -97,13 +106,14 @@ public class Supermercado {
             }
         }
         
-        // Calcular tiempo total
+        // Calculamos el  tiempo total
         long tiempoFinTotal = System.currentTimeMillis();
         long tiempoTotal = (tiempoFinTotal - tiempoInicioTotal) / 1000;
         
-        // Mostrar tiempo total de la simulación
+        // Mostramos el tiempo total por pantalla
         System.out.println("\nTiempo total global para atender a todos los clientes: " + tiempoTotal + " segundos\n");
         
+        //Cerramos el scanner
         scanner.close();
     }
 }
