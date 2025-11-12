@@ -1,4 +1,4 @@
-package practica_runnable;
+package practicaRunnableCajasClientesCorrecionAlumnos;
 
 /**
  * @author Iván López Benítez

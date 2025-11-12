@@ -1,11 +1,10 @@
-package practica_runnable;
+package practicaRunnableCajasClientesCorrecionAlumnos;
 
 /**
  * @author Iván López Benítez
  */
 
 import java.util.Scanner;
-import java.util.Random;
 
 public class Supermercado {
 
